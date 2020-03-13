@@ -1,18 +1,18 @@
 {
-    "name": "dmf/plugin-api-seo-url",
-    "description": "seo_url api plugin",
+    "name": "dmf/sw6-plugin-api",
+    "description": "api plugin",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Dmf\\ApiSeoUrl\\": "src/"
+            "Dmf\\Api\\": "src/"
         }
     },
     "extra": {
-        "shopware-plugin-class": "Dmf\\ApiSeoUrl\\DmfApiSeoUrl",
+        "shopware-plugin-class": "Dmf\\Api\\DmfApi",
         "label": {
-            "de-DE": "seo_url api plugin",
-            "en-GB": "seo_url api plugin"
+            "de-DE": "api plugin",
+            "en-GB": "api plugin"
         }
     }
 }

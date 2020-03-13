@@ -4,7 +4,7 @@
  * @link   https://www.digitalmanufaktur.com/
  */
 
-namespace Dmf\ApiSeoUrl\Controller;
+namespace Dmf\Api\Controller;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;

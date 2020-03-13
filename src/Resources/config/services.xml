@@ -5,10 +5,69 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="Dmf\ApiSeoUrl\Controller\SeoUrlApiController" public="true">
+        <service id="Dmf\Api\Controller\SeoUrlApiController" public="true">
             <argument type="service" id="seo_url.repository"/>
             <argument type="service" id="Shopware\Core\System\SalesChannel\Entity\SalesChannelDefinitionInstanceRegistry"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Search\RequestCriteriaBuilder"/>
+        </service>
+
+        <service id="Dmf\Api\Controller\PageApiController" public="true">
+            <argument type="service" id="Dmf\Api\Page\Loader\Context\PageLoaderContextBuilder"/>
+            <argument type="tagged" tag="dmf.page_loader"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="Dmf\Api\Page\Loader\ProductPageLoader">
+            <argument id="sales_channel.product.repository" type="service"/>
+            <argument type="service" id="Dmf\Api\Page\Result\Product\ProductPageResultHydrator"/>
+            <argument id="Shopware\Core\Framework\DataAbstractionLayer\Search\RequestCriteriaBuilder" type="service"/>
+            <argument id="Shopware\Core\Content\Product\SalesChannel\SalesChannelProductDefinition" type="service"/>
+            <tag name="dmf.page_loader"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Loader\NavigationPageLoader">
+            <argument type="service" id="sales_channel.category.repository"/>
+            <argument type="service" id="Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoader"/>
+            <argument type="service" id="Dmf\Api\Page\Result\Navigation\NavigationPageResultHydrator"/>
+            <argument type="service" id="Shopware\Core\Content\Category\CategoryDefinition"/>
+            <tag name="dmf.page_loader"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Loader\Context\PageLoaderContextBuilder">
+            <argument type="service" id="Dmf\Api\Page\Loader\Context\PathResolver"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Loader\Context\PathResolver">
+            <argument id="Dmf\Api\Entity\SalesChannelRoute\SalesChannelRouteRepository" type="service"/>
+        </service>
+
+        <service id="Dmf\Api\Entity\SalesChannelRoute\SalesChannelRouteRepository">
+            <argument type="service" id="seo_url.repository"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Result\Product\ProductPageResultHydrator"/>
+
+        <service id="Dmf\Api\Page\Result\Navigation\NavigationPageResultHydrator">
+            <argument type="service" id="Shopware\Storefront\Framework\Routing\Router"/>
+            <argument type="tagged" tag="dmf.page_result.aggregation_result_hydrator"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Result\Navigation\AggregationResultHydrator\EntityResultHydrator">
+            <tag name="dmf.page_result.aggregation_result_hydrator"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Result\Navigation\AggregationResultHydrator\TermsResultHydrator">
+            <tag name="dmf.page_result.aggregation_result_hydrator"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Result\Navigation\AggregationResultHydrator\StatsResultHydrator">
+            <tag name="dmf.page_result.aggregation_result_hydrator"/>
+        </service>
+
+        <service id="Dmf\Api\Page\Result\Navigation\AggregationResultHydrator\MaxResultHydrator">
+            <tag name="dmf.page_result.aggregation_result_hydrator"/>
         </service>
     </services>
 </container>
